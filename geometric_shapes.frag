@@ -1,3 +1,6 @@
+#define PI 3.14159265359
+#define TWO_PI 6.28318530718
+
 float fillCircle(in vec2 _st,  in vec2 _pos, in float _radius){
     _radius *= PI;
     _radius *= _radius;
@@ -20,3 +23,17 @@ vec3 fillRect(vec2 st, vec2 pos, vec2 size){
 vec3 rect(vec2 st, vec2 pos, vec2 size, float thickness){
     return fillRect(st, pos, size) - fillRect(st, pos+thickness, size-2.*thickness);
     
+// Reference to
+// http://thndl.com/square-shaped-shaders.html
+float fillRegularPolygon(vec2 st, vec2 pos, int Nsides, float radius, float angle){
+    
+    st -= pos - 0.5;
+
+    //remap space to -1. to 1.
+    st = st *2.-1.;
+    
+	float a=atan(st.x,st.y)+PI;
+	float b=TWO_PI/float(Nsides);
+    a+=angle;
+	return 1.-smoothstep(radius,radius+0.01, cos(floor(.5+a/b)*b-a)*length(st));
+}
