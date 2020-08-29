@@ -1,8 +1,10 @@
-float fillCircle(in vec2 _st,  in vec2 _pos, in float _diam){
+float fillCircle(in vec2 _st,  in vec2 _pos, in float _radius){
+    _radius *= PI;
+    _radius *= _radius;
     vec2 dist = _st-vec2(_pos);
-	return 1.-smoothstep(_diam-(_diam*0.01),
-                         _diam+(_diam*0.01),
-                         dot(dist,dist)*4.0);
+	return 1.-smoothstep(_radius-(_radius*0.005),
+                         _radius+(_radius*0.005),
+                         dot(dist,dist)*PI*PI);
 }
 
 float circle(in vec2 _st,  in vec2 _pos, in float _diam, in float _thickness){
